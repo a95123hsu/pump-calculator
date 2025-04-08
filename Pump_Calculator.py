@@ -2,17 +2,34 @@
 import streamlit as st
 import math
 
-# Set light theme via config block
-st.set_page_config(
-    page_title="Pipe Head Loss Calculator",
-    layout="centered"
-)
+# Page setup
+st.set_page_config(page_title="Pipe Head Loss Calculator", layout="centered")
 
-# --- Logo and Heading Side by Side ---
-col1, col2 = st.columns([1, 5])
+# Inject custom CSS for white background and larger text
+st.markdown("""
+    <style>
+        body {
+            background-color: white;
+        }
+        .block-container {
+            font-size: 18px;
+        }
+        h1, h2, h3, .stMarkdown {
+            font-size: 22px !important;
+        }
+        label {
+            font-size: 18px !important;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
+# --- Logo and Heading on Same Line ---
+col1, col2 = st.columns([1, 6])
 with col1:
-    st.image("https://www.hungpump.com/images/340357", width=150)
-    st.markdown("<h2 style='color: #1E90FF; margin-top: -30px;'>HUNG PUMP</h2>", unsafe_allow_html=True)
+    st.image("https://www.hungpump.com/images/340357", width=80)
+with col2:
+    st.markdown("### <span style='color:#1E90FF;'>HUNG PUMP</span>", unsafe_allow_html=True)
+
 st.title("Pipe Head Loss Calculator")
 
 st.markdown("This calculator determines the head loss (friction loss) in a pipe using the **Hazen-Williams equation**. It also includes equivalent lengths from fittings using K-values and a fixed friction factor (0.02).")
@@ -63,18 +80,16 @@ c_factor = st.number_input("Pipe Material (Hazen-Williams C-Factor)", value=150)
 
 st.divider()
 
-# Fittings section
+# Fittings section - vertically stacked layout
 st.header("Optional Fittings")
-cols = st.columns(7)
-fittings = {
-    "elbows90": cols[0].number_input("90° Elbows", min_value=0, value=0),
-    "elbows45": cols[1].number_input("45° Elbows", min_value=0, value=0),
-    "teeThrough": cols[2].number_input("Tee (Through)", min_value=0, value=0),
-    "teeBranch": cols[3].number_input("Tee (Branch)", min_value=0, value=0),
-    "gateValve": cols[4].number_input("Gate Valves", min_value=0, value=0),
-    "globeValve": cols[5].number_input("Globe Valves", min_value=0, value=0),
-    "checkValve": cols[6].number_input("Check Valves", min_value=0, value=0)
-}
+fittings = {}
+fittings["elbows90"] = st.number_input("90° Elbows", min_value=0, value=0)
+fittings["elbows45"] = st.number_input("45° Elbows", min_value=0, value=0)
+fittings["teeThrough"] = st.number_input("Tee (Through)", min_value=0, value=0)
+fittings["teeBranch"] = st.number_input("Tee (Branch)", min_value=0, value=0)
+fittings["gateValve"] = st.number_input("Gate Valves", min_value=0, value=0)
+fittings["globeValve"] = st.number_input("Globe Valves", min_value=0, value=0)
+fittings["checkValve"] = st.number_input("Check Valves", min_value=0, value=0)
 
 st.divider()
 
@@ -85,16 +100,13 @@ if st.button("Calculate Head Loss"):
     L = length * length_unit_factors[length_unit]
 
     if Q > 0 and D > 0:
-        # Velocity
         area = math.pi * (D ** 2) / 4
         velocity = Q / area
 
-        # Equivalent length from fittings
         total_K = sum(fittings[k] * fitting_k[k] for k in fittings)
         equiv_length = (total_K * D) / 0.02
         total_length = L + equiv_length
 
-        # Hazen-Williams head loss
         head_loss = 10.67 * total_length * (Q / c_factor) ** 1.85 / D ** 4.87
 
         st.success("Results")
