@@ -5,7 +5,7 @@ import math
 # Page setup
 st.set_page_config(page_title="Pipe Head Loss Calculator", layout="centered")
 
-# Inject custom CSS for white background and larger text
+# Inject custom CSS for styling
 st.markdown("""
     <style>
         body {
@@ -19,6 +19,20 @@ st.markdown("""
         }
         label {
             font-size: 18px !important;
+        }
+        .blue-result {
+            color: #1E90FF;
+            font-weight: bold;
+        }
+        .stButton>button {
+            background-color: #4CAF50;
+            color: white;
+            font-size: 18px;
+            border-radius: 8px;
+            padding: 0.5em 1em;
+        }
+        .stButton>button:hover {
+            background-color: #45a049;
         }
     </style>
 """, unsafe_allow_html=True)
@@ -110,8 +124,8 @@ if st.button("Calculate Head Loss"):
         head_loss = 10.67 * total_length * (Q / c_factor) ** 1.85 / D ** 4.87
 
         st.success("Results")
-        st.write(f"**Flow Velocity (v):** {'{:.2f}'.format(velocity)} m/s" if velocity >= 0.01 else f"**Flow Velocity (v):** {'{:.2e}'.format(velocity)} m/s")
-        st.write(f"**Head Loss (hf):** {'{:.3f}'.format(head_loss)} meters" if head_loss >= 0.01 else f"**Head Loss (hf):** {'{:.3e}'.format(head_loss)} meters")
-        st.write(f"**Equivalent Length from Fittings:** {equiv_length:.2f} meters")
+        st.markdown(f"**Flow Velocity (v):** <span class='blue-result'>{velocity:.2f} m/s</span>" if velocity >= 0.01 else f"**Flow Velocity (v):** <span class='blue-result'>{velocity:.2e} m/s</span>", unsafe_allow_html=True)
+        st.markdown(f"**Head Loss (hf):** <span class='blue-result'>{head_loss:.3f} meters</span>" if head_loss >= 0.01 else f"**Head Loss (hf):** <span class='blue-result'>{head_loss:.3e} meters</span>", unsafe_allow_html=True)
+        st.markdown(f"**Equivalent Length from Fittings:** <span class='blue-result'>{equiv_length:.2f} meters</span>", unsafe_allow_html=True)
     else:
         st.error("Please enter valid positive numbers for flow and diameter.")
