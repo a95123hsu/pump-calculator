@@ -91,7 +91,29 @@ len_col1, len_col2 = st.columns([2, 1])
 length = len_col1.number_input("Pipe Length", value=100.0)
 length_unit = len_col2.selectbox("Length Unit", list(length_unit_factors.keys()))
 
-c_factor = st.number_input("Pipe Material (Hazen-Williams C-Factor)", value=150)
+material_options = {
+    "New Steel/Iron (C=150)": 150,
+    "New PVC/Plastic (C=140)": 140,
+    "HDPE - New (C=150)": 150,
+    "HDPE - Used (C=140)": 140,
+    "Galvanized Iron - New (C=120)": 120,
+    "Galvanized Iron - Used (C=100)": 100,
+    "Ductile Iron - New (C=130)": 130,
+    "Ductile Iron - Used (C=120)": 120,
+    "Cast Iron - New (C=130)": 130,
+    "Cast Iron - 10 years (C=110)": 110,
+    "Cast Iron - 20 years (C=100)": 100,
+    "Cast Iron - 30 years (C=90)": 90,
+    "Cast Iron - 40 years (C=80)": 80,
+    "Fire Hose - New (C=140)": 140,
+    "Fire Hose - Used (C=130)": 130,
+    "Garden Hose - Rubber (C=100)": 100,
+    "Industrial Hose - New (C=130)": 130
+}
+
+material_choice = st.selectbox("Pipe Material (Hazen-Williams C-Factor)", list(material_options.keys()))
+c_factor = material_options[material_choice]
+
 
 st.divider()
 
