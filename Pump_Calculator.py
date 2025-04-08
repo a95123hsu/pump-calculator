@@ -5,31 +5,32 @@ import math
 # Page setup
 st.set_page_config(page_title="Pipe Head Loss Calculator", layout="centered")
 
-# Inject custom CSS for styling
+# Inject CSS for larger fonts and styling
 st.markdown("""
     <style>
         body {
             background-color: white;
         }
         .block-container {
-            font-size: 18px;
+            font-size: 20px;
         }
         h1, h2, h3, .stMarkdown {
-            font-size: 22px !important;
+            font-size: 26px !important;
         }
         label {
-            font-size: 18px !important;
+            font-size: 20px !important;
         }
         .blue-result {
             color: #1E90FF;
             font-weight: bold;
+            font-size: 22px;
         }
         .stButton>button {
             background-color: #4CAF50;
             color: white;
-            font-size: 18px;
+            font-size: 20px;
             border-radius: 8px;
-            padding: 0.5em 1em;
+            padding: 0.6em 1.2em;
         }
         .stButton>button:hover {
             background-color: #45a049;
@@ -40,7 +41,7 @@ st.markdown("""
 # --- Logo and Heading on Same Line ---
 col1, col2 = st.columns([1, 6])
 with col1:
-    st.image("https://www.hungpump.com/images/340357", width=80)
+    st.image("https://www.hungpump.com/images/340357", width=90)
 with col2:
     st.markdown("### <span style='color:#1E90FF;'>HUNG PUMP</span>", unsafe_allow_html=True)
 
