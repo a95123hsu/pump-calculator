@@ -77,20 +77,7 @@ fitting_k = {
     "checkValve": 2
 }
 
-# Input section
-st.header("Pipe & Flow Parameters")
-flow_col1, flow_col2 = st.columns([2, 1])
-flow_rate = flow_col1.number_input("Flow Rate", value=100.0)
-flow_unit = flow_col2.selectbox("Flow Unit", list(flow_unit_factors.keys()))
-
-diam_col1, diam_col2 = st.columns([2, 1])
-diameter = diam_col1.number_input("Pipe Diameter", value=50.0)
-diam_unit = diam_col2.selectbox("Diameter Unit", list(diameter_unit_factors.keys()))
-
-len_col1, len_col2 = st.columns([2, 1])
-length = len_col1.number_input("Pipe Length", value=100.0)
-length_unit = len_col2.selectbox("Length Unit", list(length_unit_factors.keys()))
-
+# Pipe material dropdown
 material_options = {
     "New Steel/Iron (C=150)": 150,
     "New PVC/Plastic (C=140)": 140,
@@ -111,9 +98,22 @@ material_options = {
     "Industrial Hose - New (C=130)": 130
 }
 
+# Input section
+st.header("Pipe & Flow Parameters")
+flow_col1, flow_col2 = st.columns([2, 1])
+flow_rate = flow_col1.number_input("Flow Rate", value=100.0)
+flow_unit = flow_col2.selectbox("Flow Unit", list(flow_unit_factors.keys()))
+
+diam_col1, diam_col2 = st.columns([2, 1])
+diameter = diam_col1.number_input("Pipe Diameter", value=50.0)
+diam_unit = diam_col2.selectbox("Diameter Unit", list(diameter_unit_factors.keys()))
+
+len_col1, len_col2 = st.columns([2, 1])
+length = len_col1.number_input("Pipe Length", value=100.0)
+length_unit = len_col2.selectbox("Length Unit", list(length_unit_factors.keys()))
+
 material_choice = st.selectbox("Pipe Material (Hazen-Williams C-Factor)", list(material_options.keys()))
 c_factor = material_options[material_choice]
-
 
 st.divider()
 
